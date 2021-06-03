@@ -1,27 +1,25 @@
-def is_leap_year(year):
-    if year % 4 == 0:
-        if year % 400 > 0 and year % 100 == 0:
-            return False
-        else:
-            return True
-    else:
-        return False
+'''
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+'''
 
-all_day = 0
-sunday_cnt = 0
-for year in range(1900, 2001):
-    for month in range(1, 13):
-        for day in range(1, 32):
-            if month in [4, 6, 9, 11] and day > 30:
-                break
-            elif month == 2 and not is_leap_year(year) and day > 28:
-                break
-            elif month == 2 and is_leap_year(year) and day > 29:
-                break
-            else:
-                all_day += 1
-                if year >= 1901 and day == 1 and all_day % 7 == 0:
-                    sunday_cnt += 1
+# lcm(a, b) = |a * b| / gcd(a, b)
+# in python 3.9+, lcm is also in the math module, however I am using python 3.8
+from math import gcd
 
-print(all_day)
-print(sunday_cnt)
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
+
+
+def main():
+    final = 1
+    for i in range(1, 21):
+        final = lcm(final, i)
+    return final
+
+
+if __name__ == "__main__":
+    print(main())
+
+# Output: 232792560
